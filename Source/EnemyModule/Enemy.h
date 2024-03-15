@@ -16,17 +16,22 @@ class ENEMYMODULE_API AEnemy : public ABaseCharacter
 public:
 	AEnemy();
 
+	// DefaultSetting
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
 		class AActor* target;
 
+	// AI Stat
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyMoveSetting")
 		float moveSpeed;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyAttackSetting")
 		float attackDelay;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyAttackSetting")
 		float attackRange;
+
+
+	// ¸ùÅ¸ÁÖ
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class UAnimMontage* jump_Montage;
 
 protected:
 	// Called when the game starts or when spawned
