@@ -23,10 +23,6 @@ public:
 	// AI Stat
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyMoveSetting")
 		float moveSpeed;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyAttackSetting")
-		float attackDelay;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyAttackSetting")
-		float attackRange;
 
 
 	// ¸ùÅ¸ÁÖ
