@@ -16,6 +16,9 @@ class ENEMYMODULE_API AEnemyController : public AAIController
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
+		bool inSight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
 		class UBlackboardData* BB;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
