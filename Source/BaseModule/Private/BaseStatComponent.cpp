@@ -10,6 +10,7 @@ UBaseStatComponent::UBaseStatComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
+	maxHp = 100.f;
 	// ...
 }
 
@@ -18,7 +19,7 @@ UBaseStatComponent::UBaseStatComponent()
 void UBaseStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	hp = maxHp;
 	// ...
 	
 }
@@ -30,5 +31,27 @@ void UBaseStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UBaseStatComponent::Attacked(float p_Damage)
+{
+	bAttacked = true;
+
+	hp -= p_Damage;
+
+	if (hp < 0.f)
+	{
+		hp = 0;
+	}
+}
+
+void UBaseStatComponent::Recovery(float p_Recover)
+{
+	hp += p_Recover;
+
+	if (hp > maxHp)
+	{
+		hp = maxHp;
+	}
 }
 

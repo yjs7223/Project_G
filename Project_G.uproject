@@ -25,7 +25,9 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"BaseModule"
+				"BaseModule",
+				"Engine",
+				"UMG"
 			]
 		},
 		{
