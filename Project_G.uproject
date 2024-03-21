@@ -31,7 +31,10 @@
 		{
 			"Name": "EnemyModule",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"BaseModule"
+			]
 		}
 	],
 	"Plugins": [
