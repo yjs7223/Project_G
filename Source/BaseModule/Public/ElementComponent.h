@@ -9,13 +9,13 @@
 UENUM(BlueprintType)
 enum class EElementTypeEnum : uint8
 {
-	ET_Normal UMETA(DisplayName = "Normal"),
-	ET_Flame UMETA(DisplayName = "Flame"),
-	ET_Water UMETA(DisplayName = "Water"),
-	ET_Air UMETA(DisplayName = "Air"),
-	ET_FlameWater UMETA(DisplayName = "FlameWater"),
-	ET_FlameAir UMETA(DisplayName = "FlameAir"),
-	ET_WaterAir UMETA(DisplayName = "WaterAir"),
+	ET_Normal = 0 UMETA(DisplayName = "Normal"),
+	ET_Flame = 1 UMETA(DisplayName = "Flame"),
+	ET_Water = 2 UMETA(DisplayName = "Water"),
+	ET_Air = 4 UMETA(DisplayName = "Air"),
+	ET_FlameWater = ET_Flame + ET_Water UMETA(DisplayName = "FlameWater"),
+	ET_FlameAir = ET_Flame + ET_Air UMETA(DisplayName = "FlameAir"),
+	ET_WaterAir = ET_Water + ET_Air UMETA(DisplayName = "WaterAir"),
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
