@@ -20,6 +20,7 @@ APlayerCharacter::APlayerCharacter()
 
 	inputVector = FVector::ZeroVector;
 	bFire = false;
+	jumpCount = 2;
 }
 
 void APlayerCharacter::BeginPlay()
@@ -55,7 +56,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &APlayerCharacter::StartJump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &APlayerCharacter::StopJump);
 
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APlayerCharacter::StartFire);
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &APlayerCharacter::StopFire);
@@ -230,5 +232,28 @@ void APlayerCharacter::CheckHoldingKey()
 		GetWorldSettings()->SetTimeDilation(.1f);
 		bSwapElement = false;
 		OnToggleElementOverlayDelegate.ExecuteIfBound();
+	}
+}
+
+void APlayerCharacter::StartJump()
+{
+	if (jumpCount <= 0)
+	{
+		return;
+	}
+	FVector jumpDir = FVector::ZeroVector;
+	jumpDir.Z = FindComponentByClass<UCharacterMovementComponent>()->JumpZVelocity;
+	LaunchCharacter(jumpDir, false, true);
+}
+
+void APlayerCharacter::StopJump()
+{
+	if (jumpCount <= 0)
+	{
+		return;
+	}
+	else
+	{
+		jumpCount--;
 	}
 }

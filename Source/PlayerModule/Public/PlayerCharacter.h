@@ -67,6 +67,9 @@ public:
 
 	void CheckHoldingKey();
 
+	void StartJump();
+	void StopJump();
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCameraComponent* camera;
@@ -104,4 +107,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float elementHoldingtime;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int jumpCount;
 };
