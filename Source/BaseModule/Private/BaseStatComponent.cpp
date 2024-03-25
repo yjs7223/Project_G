@@ -11,6 +11,8 @@ UBaseStatComponent::UBaseStatComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	maxHp = 100.f;
+	bAttacked = false;
+	hp = 100.f;
 	// ...
 }
 
@@ -43,6 +45,8 @@ void UBaseStatComponent::Attacked(float p_Damage)
 	{
 		hp = 0;
 	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::SanitizeFloat(hp));
 }
 
 void UBaseStatComponent::Recovery(float p_Recover)

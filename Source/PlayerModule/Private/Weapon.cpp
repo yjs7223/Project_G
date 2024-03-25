@@ -36,6 +36,9 @@ void AWeapon::BeginPlay()
 		pc->OnChangeWeaponTypeDelegate.BindUObject(this, &AWeapon::ChangeWeapon);
 		pc->OnChangeElementTypeDelegate.BindUObject(this, &AWeapon::ChangeElement);
 	}
+	FPlayerWeaponStruct* weaponData;
+	weaponData = PlayerWeaponDataTable->FindRow<FPlayerWeaponStruct>(FName("RF"), FString(""));
+	damage = weaponData->damage;
 }
 
 // Called every frame
