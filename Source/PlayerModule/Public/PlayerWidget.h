@@ -31,6 +31,13 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ChangeElement(EElementTypeEnum p_ElementType);
+
+	UFUNCTION(BlueprintCallable)
+	void SetVisibilityWeapon(bool p_bEnabled);
+
+	UFUNCTION(BlueprintCallable)
+	void SetVisibilityElement(bool p_bEnabled);
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidgetOptional))
 	class UOverlay* WeaponSwapOverlay;
@@ -58,5 +65,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidgetOptional))
 	class UButton* Element3;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidgetOptional))
+	class UButton* Element4;
 
 };
