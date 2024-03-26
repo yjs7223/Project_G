@@ -15,7 +15,7 @@ AEnemySpawner::AEnemySpawner()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	TriggerOn = false;
+	bTriggerOn = false;
 }
 
 // Called when the game starts or when spawned
@@ -46,13 +46,13 @@ void AEnemySpawner::SpawnWave()
 {
 	AEnemy* enemy = nullptr;
 	//라이플
-	if (rifleCount < spawn_Wave[Enemy_Name::ENEMY1])
+	if (rifleCount < spawnWave[EEnemyName::ENEMY1])
 	{
 		// 스폰 위치 검사 후 변경
-		spawn_Spot = SetSpawnSpot(spawn_Spot);
+		spawnSpot = SetSpawnSpot(spawnSpot);
 
 		// 생성
-		APawn* temp = UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), CloseRangeEnemy, BT_Enemy, spawn_Spots[spawn_Spot]->GetActorLocation());
+		APawn* temp = UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), CloseRangeEnemy, BT_Enemy, spawn_Spots[spawnSpot]->GetActorLocation());
 
 		enemy = Cast<AEnemy>(temp);
 
@@ -77,14 +77,14 @@ void AEnemySpawner::SpawnWave()
 			}
 		}
 	}
-	else if (sniperCount < spawn_Wave[Enemy_Name::ENEMY2])
+	else if (sniperCount < spawnWave[EEnemyName::ENEMY2])
 	{
 		// 스폰 위치 검사 후 변경
-		spawn_Spot = SetSpawnSpot(spawn_Spot);
+		spawnSpot = SetSpawnSpot(spawnSpot);
 
 		// 생성
 		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("Spawn!"));
-		APawn* temp = UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), LongRangeEnemy, BT_Enemy, spawn_Spots[spawn_Spot]->GetActorLocation());
+		APawn* temp = UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), LongRangeEnemy, BT_Enemy, spawn_Spots[spawnSpot]->GetActorLocation());
 
 		enemy = Cast<AEnemy>(temp);
 		// 생성되면서 자신을 생성한 스포너를 저장하도록 함
@@ -106,7 +106,7 @@ void AEnemySpawner::SpawnWave()
 	else
 	{
 		// 스폰 완료
-		spawnCheck = true;
+		bSpawnCheck = true;
 		rifleCount = 0;
 		sniperCount = 0;
 	}
@@ -118,76 +118,76 @@ void AEnemySpawner::WaveControl(const float DeltaTime)
 	{
 		return;
 	}
-	if (TriggerOn == true)
+	if (bTriggerOn == true)
 	{
 		SetDataTable(curWave);
-		if (!check_Overlap)
+		if (!bCheckEnable)
 		{
-			check_Overlap = true;
+			bCheckEnable = true;
 		}
 		if (waveEnd)
 		{
 			waveEnd = false;
 		}
-		if (spawnCheck)
+		if (bSpawnCheck)
 		{
-			spawnCheck = false;
+			bSpawnCheck = false;
 		}
 
 	}
 	// 마지막 웨이브인지 확인 및 스폰
-	if (check_Overlap && !spawnCheck)
+	if (bCheckEnable && !bSpawnCheck)
 	{
-		switch (spawn_Type)
+		switch (spawnType)
 		{
-		case Spawn_Type::KILL:
-			if (count_Kill >= spawn_Condition)
+		case ESpawnType::KILL:
+			if (countKill >= spawnCondition)
 			{
-				spawn_Delay += DeltaTime;
-				if (spawn_Delay >= (*curSpawnData).spawn_Delay)
+				spawnDelay += DeltaTime;
+				if (spawnDelay >= (*curSpawnData).spawnDelay)
 				{
 					SpawnWave();
-					spawn_Delay = 0;
+					spawnDelay = 0;
 				}
 			}
 			break;
-		case Spawn_Type::SECONDS:
-			spawn_Timer += DeltaTime;
-			if (spawn_Timer >= spawn_Condition)
+		case ESpawnType::SECONDS:
+			spawnTimer += DeltaTime;
+			if (spawnTimer >= spawnCondition)
 			{
-				spawn_Delay += DeltaTime;
-				if (spawn_Delay >= (*curSpawnData).spawn_Delay)
+				spawnDelay += DeltaTime;
+				if (spawnDelay >= (*curSpawnData).spawnDelay)
 				{
 					SpawnWave();
-					spawn_Delay = 0;
-					count_Kill = 0;
+					spawnDelay = 0;
+					countKill = 0;
 				}
 			}
 			break;
-		case Spawn_Type::TRIGGER:
-			if (TriggerOn)
+		case ESpawnType::TRIGGER:
+			if (bTriggerOn)
 			{
-				spawn_Delay += DeltaTime;
-				if (spawn_Delay >= (*curSpawnData).spawn_Delay)
+				spawnDelay += DeltaTime;
+				if (spawnDelay >= (*curSpawnData).spawnDelay)
 				{
 					SpawnWave();
-					spawn_Delay = 0;
-					count_Kill = 0;
+					spawnDelay = 0;
+					countKill = 0;
 				}
 			}
 		}
 	}
 
-	if (last_Spawn && spawnCheck)
+	if (lastSpawn && bSpawnCheck)
 	{
-		TriggerOn = false;
-		check_Overlap = false;
+		bTriggerOn = false;
+		bCheckEnable = false;
 		waveEnd = true;
 		curWave = 0;
 
 	}
 	// 다음 웨이브
-	else if (spawnCheck)
+	else if (bSpawnCheck)
 	{
 		NextWave();
 	}
@@ -196,9 +196,9 @@ void AEnemySpawner::WaveControl(const float DeltaTime)
 int AEnemySpawner::SetSpawnSpot(int p_Spawn_Pos)
 {
 	// 플레이어와 가깝지 않다면 소환
-	if (spawn_Spots[spawn_Spot]->GetDistanceTo(player) >= 0)
+	if (spawn_Spots[spawnSpot]->GetDistanceTo(player) >= 0)
 	{
-		p_Spawn_Pos = spawn_Spot;
+		p_Spawn_Pos = spawnSpot;
 	}
 	else
 	{
@@ -208,7 +208,7 @@ int AEnemySpawner::SetSpawnSpot(int p_Spawn_Pos)
 			if (spawn_Spots[i]->GetDistanceTo(player) > 50)
 			{
 				// 처음 들어온 거라면 일단 넣기
-				if (p_Spawn_Pos == spawn_Spot)
+				if (p_Spawn_Pos == spawnSpot)
 				{
 					p_Spawn_Pos = i;
 				}
@@ -226,21 +226,21 @@ int AEnemySpawner::SetSpawnSpot(int p_Spawn_Pos)
 
 void AEnemySpawner::NextWave()
 {
-	count_Kill = 0;
-	spawn_Timer = 0;
+	countKill = 0;
+	spawnTimer = 0;
 	// 다음 웨이브로 넘기기
 	SetDataTable(++curWave);
-	spawnCheck = false;
+	bSpawnCheck = false;
 }
 
 void AEnemySpawner::SpawnEnable(bool p_flag)
 {
-	check_Overlap = p_flag;
+	bCheckEnable = p_flag;
 }
 
 void AEnemySpawner::TriggerOnTrue()
 {
-	TriggerOn = true;
+	bTriggerOn = true;
 }
 
 void AEnemySpawner::SetDataTable(int p_curWave)
@@ -250,12 +250,12 @@ void AEnemySpawner::SetDataTable(int p_curWave)
 		curSpawnData = spawnData->FindRow<FST_Spawner>(*FString::FromInt(p_curWave), TEXT(""));
 		if (curSpawnData != nullptr)
 		{
-			last_Spawn = curSpawnData->last_Spawn;
-			spawn_Condition = curSpawnData->spawn_Condition;
-			spawn_Delay = curSpawnData->spawn_Delay;
-			spawn_Spot = curSpawnData->spawn_Spot;
-			spawn_Type = curSpawnData->spawn_Type;
-			spawn_Wave = curSpawnData->spawn_Wave;
+			lastSpawn = curSpawnData->bLastSpawn;
+			spawnCondition = curSpawnData->spawnCondition;
+			spawnDelay = curSpawnData->spawnDelay;
+			spawnSpot = curSpawnData->spawnSpot;
+			spawnType = curSpawnData->spawnType;
+			spawnWave = curSpawnData->spawn_Wave;
 		}
 	}
 }

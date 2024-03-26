@@ -26,27 +26,25 @@ public:
 	// 현재 데이터 테이블
 	struct FST_Spawner* curSpawnData;
 
-	// 물량 스포너 확인
+	// 트리거 확인
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool many_Spawn;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool TriggerOn;
+		bool bTriggerOn;
 
 	// 스포너 활성화 상태
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnerSetting")
-		bool check_Overlap;
+		bool bCheckEnable;
 
 	// 플레이어가 사살한 적의 수
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnerSetting")
-		int count_Kill;
+		int countKill;
 
 	// 웨이브 생성 후 시간
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnerSetting")
-		float count_Seconds;
+		float countSeconds;
 
 	// 딜레이용
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnerSetting")
-		float spawn_Timer;
+		float spawnTimer;
 	// 스폰할 적
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnerSetting")
 		TSubclassOf<APawn> CloseRangeEnemy;
@@ -59,7 +57,7 @@ public:
 	class AEnemyController* EnemyController;
 
 	// 이번 웨이브 소환 여부
-	bool spawnCheck;
+	bool bSpawnCheck;
 
 	// 이번 웨이브에 소환 한 수
 	int rifleCount;
@@ -87,13 +85,13 @@ public:
 		AActor* cpyLastPoint;
 
 	// 데이터 테이블 정보
-	bool last_Spawn;
-	float spawn_Condition;
-	float spawn_Delay;
+	bool lastSpawn;
+	float spawnCondition;
+	float spawnDelay;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int spawn_Spot;
-	enum Spawn_Type spawn_Type;
-	TMap<enum Enemy_Name, int> spawn_Wave;
+		int spawnSpot;
+	enum ESpawnType spawnType;
+	TMap<enum EEnemyName, int> spawnWave;
 
 	bool waveEnd;
 protected:

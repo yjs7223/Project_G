@@ -16,13 +16,13 @@ public:
 };
 
 UENUM(BlueprintType)
-enum class Spawn_Type : uint8
+enum class ESpawnType : uint8
 {
 	KILL, SECONDS, TRIGGER
 };
 
 UENUM(BlueprintType)
-enum class Enemy_Name : uint8
+enum class EEnemyName : uint8
 {
 	ENEMY1, ENEMY2
 };
@@ -34,31 +34,31 @@ struct FST_Spawner : public FTableRowBase
 public:
 	// 생성 조건 타입
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		Spawn_Type spawn_Type;
+		ESpawnType spawnType;
 
 	// 스폰 액터 사이의 딜레이 시간
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float spawn_Delay;
+		float spawnDelay;
 
 	// 각 웨이브마다 소환할 유닛들
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TMap<Enemy_Name, int> spawn_Wave =
+		TMap<EEnemyName, int> spawn_Wave =
 		{
-			{Enemy_Name::ENEMY1, 0}
-			, {Enemy_Name::ENEMY2, 0}
+			{EEnemyName::ENEMY1, 0}
+			, {EEnemyName::ENEMY2, 0}
 		};
 
 	// 스폰 조건
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float spawn_Condition;
+		float spawnCondition;
 
 	// 유닛이 생성될 위치
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int spawn_Spot;
+		int spawnSpot;
 	// 이렇게하면 액터를 넣을 수는 있지만 저장이 안됨
 	//TWeakObjectPtr<AActor> spawn_Spot;
 
-// 마지막 웨이브인지 확인
+	// 마지막 웨이브인지 확인
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool last_Spawn;
+		bool bLastSpawn;
 };
