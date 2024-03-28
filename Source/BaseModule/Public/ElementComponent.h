@@ -40,7 +40,9 @@ public:
 	void ClearElementState();
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EElementTypeEnum ElementState;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FTimerHandle clearTh;
 };
