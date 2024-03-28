@@ -38,6 +38,9 @@ public:
 	float maxHp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bDie;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bAttacked;
 
 };

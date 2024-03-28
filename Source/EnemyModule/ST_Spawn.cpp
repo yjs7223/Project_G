@@ -1,0 +1,12 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "ST_Spawn.h"
+
+ST_Spawn::ST_Spawn()
+{
+}
+
+ST_Spawn::~ST_Spawn()
+{
+}
