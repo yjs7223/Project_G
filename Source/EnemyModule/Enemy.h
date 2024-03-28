@@ -29,6 +29,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UAnimMontage* jump_Montage;
 
+	// ½ºÆ÷³Ê
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
+		class AEnemySpawner* mySpawner;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
