@@ -14,6 +14,9 @@ void UPlayerWidget::NativeConstruct()
 	{
 		pc->OnToggleElementOverlayDelegate.BindUObject(this, &UPlayerWidget::ToggleElementSwapOverlay);
 		pc->OnToggleWeaponOverlayDelegate.BindUObject(this, &UPlayerWidget::ToggleWeaponSwapOverlay);
+
+		SetVisibilityElement(false);
+		SetVisibilityWeapon(false);
 	}
 }
 
@@ -26,27 +29,41 @@ void UPlayerWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 void UPlayerWidget::ToggleWeaponSwapOverlay()
 {
+	if (ElementSwapOverlay->GetRenderOpacity() == 1.f)
+	{
+		return;
+	}
+
 	ToggleSlowBackImage();
 	if (WeaponSwapOverlay->GetRenderOpacity() == 1.f)
 	{
 		WeaponSwapOverlay->SetRenderOpacity(.0f);
+		SetVisibilityWeapon(false);
 	}
 	else
 	{
 		WeaponSwapOverlay->SetRenderOpacity(1.f);
+		SetVisibilityWeapon(true);
 	}
 }
 
 void UPlayerWidget::ToggleElementSwapOverlay()
 {
+	if (WeaponSwapOverlay->GetRenderOpacity() == 1.f)
+	{
+		return;
+	}
+
 	ToggleSlowBackImage();
 	if (ElementSwapOverlay->GetRenderOpacity() == 1.f)
 	{
 		ElementSwapOverlay->SetRenderOpacity(.0f);
+		SetVisibilityElement(false);
 	}
 	else
 	{
 		ElementSwapOverlay->SetRenderOpacity(1.f);
+		SetVisibilityElement(true);
 	}
 }
 
@@ -64,6 +81,21 @@ void UPlayerWidget::ToggleSlowBackImage()
 	APlayerController* pc = GetOwningPlayer();
 	if (pc)
 	{
+		const ULocalPlayer* LocalPlayer = pc->GetLocalPlayer();
+		if (LocalPlayer && LocalPlayer->ViewportClient)
+		{
+			FViewport* Viewport = LocalPlayer->ViewportClient->Viewport;
+			if (Viewport)
+			{
+				FVector2D ViewportSize;
+				LocalPlayer->ViewportClient->GetViewportSize(ViewportSize);
+				const int32 X = static_cast<int32>(ViewportSize.X * 0.5f);
+				const int32 Y = static_cast<int32>(ViewportSize.Y * 0.5f);
+
+				Viewport->SetMouse(X, Y);
+			}
+		}
+
 		if (!pc->bShowMouseCursor)
 		{
 			pc->SetInputMode(FInputModeGameAndUI());
@@ -86,12 +118,8 @@ void UPlayerWidget::ChangeWeapon(EWeaponTypeEnum p_WeaponType)
 	APlayerController* pc = GetOwningPlayer();
 	if (pc)
 	{
-		/*pc->SetInputMode(FInputModeGameOnly());
-		pc->bShowMouseCursor = false;
-		pc->bEnableClickEvents = false;
-		pc->bEnableMouseOverEvents = false;*/
 		pc->GetPawn<APlayerCharacter>()->OnChangeWeaponTypeDelegate.ExecuteIfBound(p_WeaponType);
-		//GetWorld()->GetWorldSettings()->SetTimeDilation(1.f);
+		
 	}
 }
 
@@ -100,11 +128,41 @@ void UPlayerWidget::ChangeElement(EElementTypeEnum p_ElementType)
 	APlayerController* pc = GetOwningPlayer();
 	if (pc)
 	{
-		/*pc->SetInputMode(FInputModeGameOnly());
-		pc->bShowMouseCursor = false;
-		pc->bEnableClickEvents = false;
-		pc->bEnableMouseOverEvents = false;*/
 		pc->GetPawn<APlayerCharacter>()->OnChangeElementTypeDelegate.ExecuteIfBound(p_ElementType);
-		//GetWorld()->GetWorldSettings()->SetTimeDilation(1.f);
+		
+	}
+}
+
+void UPlayerWidget::SetVisibilityWeapon(bool p_bEnabled)
+{
+	if (p_bEnabled)
+	{
+		Weapon1->SetVisibility(ESlateVisibility::Visible);
+		Weapon2->SetVisibility(ESlateVisibility::Visible);
+		Weapon3->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		Weapon1->SetVisibility(ESlateVisibility::Hidden);
+		Weapon2->SetVisibility(ESlateVisibility::Hidden);
+		Weapon3->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void UPlayerWidget::SetVisibilityElement(bool p_bEnabled)
+{
+	if (p_bEnabled)
+	{
+		Element1->SetVisibility(ESlateVisibility::Visible);
+		Element2->SetVisibility(ESlateVisibility::Visible);
+		Element3->SetVisibility(ESlateVisibility::Visible);
+		Element4->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		Element1->SetVisibility(ESlateVisibility::Hidden);
+		Element2->SetVisibility(ESlateVisibility::Hidden);
+		Element3->SetVisibility(ESlateVisibility::Hidden);
+		Element4->SetVisibility(ESlateVisibility::Hidden);
 	}
 }

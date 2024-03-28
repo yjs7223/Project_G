@@ -44,6 +44,7 @@ void UBaseStatComponent::Attacked(float p_Damage)
 	if (hp < 0.f)
 	{
 		hp = 0;
+		bDie = true;
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::SanitizeFloat(hp));
