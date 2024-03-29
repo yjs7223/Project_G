@@ -39,10 +39,15 @@ public:
 
 	void ClearElementState();
 
+	void PlayEffect(EElementTypeEnum p_State);
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EElementTypeEnum ElementState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FTimerHandle clearTh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UElementDataAsset* elementDataAsset;
 };
