@@ -52,11 +52,11 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 
 		if (p_ElementType == EElementTypeEnum::ET_Water)
 		{
-			ElementState = EElementTypeEnum::ET_FlameWater;
+			ElementState = EElementTypeEnum::ET_Evaporation;
 		}
 		else if (p_ElementType == EElementTypeEnum::ET_Air)
 		{
-			ElementState = EElementTypeEnum::ET_FlameAir;
+			ElementState = EElementTypeEnum::ET_Diffusion;
 		}
 		PlayEffect(ElementState);
 		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 4.f, false);
@@ -66,11 +66,11 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 
 		if (p_ElementType == EElementTypeEnum::ET_Flame)
 		{
-			ElementState = EElementTypeEnum::ET_FlameWater;
+			ElementState = EElementTypeEnum::ET_Evaporation;
 		}
 		else if (p_ElementType == EElementTypeEnum::ET_Air)
 		{
-			ElementState = EElementTypeEnum::ET_WaterAir;
+			ElementState = EElementTypeEnum::ET_Florescence;
 		}
 		PlayEffect(ElementState);
 		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 4.f, false);
@@ -80,22 +80,22 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 
 		if (p_ElementType == EElementTypeEnum::ET_Water)
 		{
-			ElementState = EElementTypeEnum::ET_WaterAir;
+			ElementState = EElementTypeEnum::ET_Florescence;
 		}
 		else if (p_ElementType == EElementTypeEnum::ET_Flame)
 		{
-			ElementState = EElementTypeEnum::ET_FlameAir;
+			ElementState = EElementTypeEnum::ET_Diffusion;
 		}
 		PlayEffect(ElementState);
 		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 4.f, false);
 		break;
-	case EElementTypeEnum::ET_FlameWater:
+	case EElementTypeEnum::ET_Evaporation:
 		//GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 5.f, false);
 		break;
-	case EElementTypeEnum::ET_FlameAir:
+	case EElementTypeEnum::ET_Diffusion:
 		//GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 5.f, false);
 		break;
-	case EElementTypeEnum::ET_WaterAir:
+	case EElementTypeEnum::ET_Florescence:
 		//GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 5.f, false);
 		break;
 	default:
@@ -126,18 +126,18 @@ void UElementComponent::PlayEffect(EElementTypeEnum p_State)
 				break;
 			case EElementTypeEnum::ET_Air:
 				break;
-			case EElementTypeEnum::ET_FlameWater:
-				GetWorld()->SpawnActor<AActor>(elementDataAsset->smokeEffect, GetOwner()->GetActorLocation(), FRotator::ZeroRotator);
+			case EElementTypeEnum::ET_Evaporation:
+				GetWorld()->SpawnActor<AActor>(elementDataAsset->EvaporationEffect, GetOwner()->GetActorLocation(), FRotator::ZeroRotator);
 
 				stat->Attacked(50.f);
 				break;
-			case EElementTypeEnum::ET_FlameAir:
-				GetWorld()->SpawnActor<AActor>(elementDataAsset->explosionEffect, GetOwner()->GetActorLocation(), FRotator::ZeroRotator);
+			case EElementTypeEnum::ET_Diffusion:
+				GetWorld()->SpawnActor<AActor>(elementDataAsset->DiffusionEffect, GetOwner()->GetActorLocation(), FRotator::ZeroRotator);
 
 				stat->Attacked(50.f);
 				break;
-			case EElementTypeEnum::ET_WaterAir:
-				GetWorld()->SpawnActor<AActor>(elementDataAsset->sparkEffect, GetOwner()->GetActorLocation(), FRotator::ZeroRotator);
+			case EElementTypeEnum::ET_Florescence:
+				GetWorld()->SpawnActor<AActor>(elementDataAsset->FlorescenceEffect, GetOwner()->GetActorLocation(), FRotator::ZeroRotator);
 
 				stat->Attacked(50.f);
 				break;

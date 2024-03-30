@@ -13,9 +13,9 @@ enum class EElementTypeEnum : uint8
 	ET_Flame = 1 UMETA(DisplayName = "Flame"),
 	ET_Water = 2 UMETA(DisplayName = "Water"),
 	ET_Air = 4 UMETA(DisplayName = "Air"),
-	ET_FlameWater = ET_Flame + ET_Water UMETA(DisplayName = "FlameWater"),
-	ET_FlameAir = ET_Flame + ET_Air UMETA(DisplayName = "FlameAir"),
-	ET_WaterAir = ET_Water + ET_Air UMETA(DisplayName = "WaterAir"),
+	ET_Evaporation = ET_Flame + ET_Water UMETA(DisplayName = "Evaporation"),
+	ET_Diffusion = ET_Flame + ET_Air UMETA(DisplayName = "Diffusion"),
+	ET_Florescence = ET_Water + ET_Air UMETA(DisplayName = "Florescence"),
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

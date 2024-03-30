@@ -16,11 +16,11 @@ class BASEMODULE_API UElementDataAsset : public UPrimaryDataAsset
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<AActor> sparkEffect;
+	TSubclassOf<AActor> FlorescenceEffect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<AActor> explosionEffect;
+	TSubclassOf<AActor> DiffusionEffect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<AActor> smokeEffect;
+	TSubclassOf<AActor> EvaporationEffect;
 };
