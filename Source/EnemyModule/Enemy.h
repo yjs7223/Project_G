@@ -33,6 +33,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
 		class AEnemySpawner* mySpawner;
 
+	class AEnemyController* ec;
+
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class UEnemyAttackComponent* enemyAttackComponent;*/
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -41,6 +46,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void MovementSetting();
+	void HpUpdate();
+	void MovementUpdate();
 	void DieCheck();
 };

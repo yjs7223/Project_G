@@ -4,27 +4,41 @@
 #include "Enemy.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "BaseStatComponent.h"
+#include "EnemyController.h"
+#include "BehaviorTree/BlackboardData.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "EnemyAttackComponent.h"
 
 AEnemy::AEnemy() : moveSpeed(600)
 {
-
+	//enemyAttackComponent = CreateDefaultSubobject<UEnemyAttackComponent>(TEXT("EnemyAttackComponent"));
 }
 
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ec = Cast<AEnemyController>(GetController());
 }
 
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	MovementSetting();
+	HpUpdate();
+	MovementUpdate();
 	//DieCheck();
 }
 
-void AEnemy::MovementSetting()
+void AEnemy::HpUpdate()
+{
+	if (ec != nullptr)
+	{
+		ec->BBC->SetValueAsFloat("HealthPoint", stat->hp);
+	}
+}
+
+void AEnemy::MovementUpdate()
 {
 	GetCharacterMovement()->MaxWalkSpeed = moveSpeed;
 }

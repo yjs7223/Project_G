@@ -23,7 +23,7 @@ public:
 	// 스폰 관련 데이터 테이블
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UDataTable* spawnData;
-	// 현재 데이터 테이블
+	// 현재 데이터 테이블+
 	struct FST_Spawner* curSpawnData;
 
 	// 트리거 확인

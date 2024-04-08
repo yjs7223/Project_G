@@ -19,7 +19,9 @@ public:
 		bool inSight;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
-		class UBlackboardData* BB;
+		class UBlackboardData* BBD;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
+		class UBlackboardComponent* BBC;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
 		class UBehaviorTree* BT;

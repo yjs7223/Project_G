@@ -2,13 +2,15 @@
 
 
 #include "EnemyController.h"
+#include "BehaviorTree/BlackboardData.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 void AEnemyController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UBlackboardComponent* BlackboardComp = Blackboard;
-	UseBlackboard(BB, BlackboardComp);
+	BBC = Blackboard;
+	UseBlackboard(BBD, BBC);
 
 }
 
