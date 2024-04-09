@@ -68,6 +68,7 @@ void UEnemyAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 void UEnemyAttackComponent::PlayAttack()
 {
 	bHit = false;
+	timer = d_delay;
 }
 
 void UEnemyAttackComponent::EndAttack()
@@ -131,7 +132,7 @@ void UEnemyAttackComponent::SetDataTable(FName p_RowName)
 		{
 			for (int i = 0; i < curAttackData->attackMontage.Num(); i++)
 			{
-``				d_attackMontage.Add(curAttackData->attackMontage[i]);
+				d_attackMontage.Add(curAttackData->attackMontage[i]);
 			}
 
 			d_attackType = curAttackData->attackType;
