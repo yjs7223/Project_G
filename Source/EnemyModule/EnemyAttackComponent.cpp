@@ -88,11 +88,11 @@ void UEnemyAttackComponent::MeleeSense()
 
 	if (GetWorld()->LineTraceSingleByChannel(m_result, rStart, rEnd, ECC_Visibility, traceParams))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::Printf(TEXT("Hit!")));
 		if (m_result.GetActor()->ActorHasTag("Player"))
 		{
 			UBaseStatComponent* stat = m_result.GetActor()->FindComponentByClass<UBaseStatComponent>();
 			stat->Attacked(attackDamage);
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::Printf(TEXT("Hit!")));
 			bHit = true;
 			return;
 		}
@@ -100,11 +100,11 @@ void UEnemyAttackComponent::MeleeSense()
 
 	if (GetWorld()->LineTraceSingleByChannel(m_result, lStart, lEnd, ECC_Visibility, traceParams))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::Printf(TEXT("Hit!")));
 		if (m_result.GetActor()->ActorHasTag("Player"))
 		{
 			UBaseStatComponent* stat = m_result.GetActor()->FindComponentByClass<UBaseStatComponent>();
 			stat->Attacked(attackDamage);
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::Printf(TEXT("Hit!")));
 			bHit = true;
 			return;
 		}
@@ -130,12 +130,13 @@ void UEnemyAttackComponent::SetDataTable(FName p_RowName)
 		curAttackData = attackDT->FindRow<FST_SkillData>(p_RowName, TEXT(""));
 		if (curAttackData != nullptr)
 		{
-			for (int i = 0; i < curAttackData->attackMontage.Num(); i++)
+			/*for (int i = 0; i < curAttackData->attackMontage.Num(); i++)
 			{
 				d_attackMontage.Add(curAttackData->attackMontage[i]);
-			}
+			}*/
 
 			d_attackType = curAttackData->attackType;
+			d_attackMontage = curAttackData->attackMontage;
 			d_rightHand = curAttackData->rightHand;
 			d_leftHand = curAttackData->leftHand;
 			d_bLoop = curAttackData->bLoop;
