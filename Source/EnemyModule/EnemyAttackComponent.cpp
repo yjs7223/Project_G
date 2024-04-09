@@ -79,10 +79,13 @@ void UEnemyAttackComponent::MeleeSense()
 {
 	FCollisionQueryParams traceParams;
 
-	FVector start = mesh->GetSocketLocation(d_attackStartPoint);
-	FVector end = mesh->GetSocketLocation(d_attackEndPoint);
+	FVector rStart = mesh->GetSocketLocation("R_Attack_Socket_Start");
+	FVector rEnd = mesh->GetSocketLocation("R_Attack_Socket_End");
 
-	if (GetWorld()->LineTraceSingleByChannel(m_result, start, end, ECC_Visibility, traceParams))
+	FVector lStart = mesh->GetSocketLocation("L_Attack_Socket_Start");
+	FVector lEnd = mesh->GetSocketLocation("L_Attack_Socket_End");
+
+	if (GetWorld()->LineTraceSingleByChannel(m_result, rStart, rEnd, ECC_Visibility, traceParams))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::Printf(TEXT("Hit!")));
 		if (m_result.GetActor()->ActorHasTag("Player"))
@@ -90,6 +93,19 @@ void UEnemyAttackComponent::MeleeSense()
 			UBaseStatComponent* stat = m_result.GetActor()->FindComponentByClass<UBaseStatComponent>();
 			stat->Attacked(attackDamage);
 			bHit = true;
+			return;
+		}
+	}
+
+	if (GetWorld()->LineTraceSingleByChannel(m_result, lStart, lEnd, ECC_Visibility, traceParams))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::Printf(TEXT("Hit!")));
+		if (m_result.GetActor()->ActorHasTag("Player"))
+		{
+			UBaseStatComponent* stat = m_result.GetActor()->FindComponentByClass<UBaseStatComponent>();
+			stat->Attacked(attackDamage);
+			bHit = true;
+			return;
 		}
 	}
 }
@@ -113,10 +129,14 @@ void UEnemyAttackComponent::SetDataTable(FName p_RowName)
 		curAttackData = attackDT->FindRow<FST_SkillData>(p_RowName, TEXT(""));
 		if (curAttackData != nullptr)
 		{
+			for (int i = 0; i < curAttackData->attackMontage.Num(); i++)
+			{
+				d_attackMontage[i] = curAttackData->attackMontage[i];
+			}
+
 			d_attackType = curAttackData->attackType;
-			d_attackMontage = curAttackData->attackMontage;
-			d_attackStartPoint = curAttackData->attackStartPoint;
-			d_attackEndPoint = curAttackData->attackEndPoint;
+			d_rightHand = curAttackData->rightHand;
+			d_leftHand = curAttackData->leftHand;
 			d_bLoop = curAttackData->bLoop;
 			d_bullet = curAttackData->bullet;
 			d_delay = curAttackData->delay;

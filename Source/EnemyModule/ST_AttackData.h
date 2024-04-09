@@ -29,15 +29,15 @@ public:
 
 	// 공격 몽타주
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UAnimMontage* attackMontage;
+		TArray<UAnimMontage*> attackMontage;
 
 	// 공격 범위 시작점 소켓 이름(근거리용)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FName attackStartPoint;
+		bool rightHand;
 
 	// 공격 범위 끝점 소켓 이름
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FName attackEndPoint;
+		bool leftHand;
 
 	// 루프 체크
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
