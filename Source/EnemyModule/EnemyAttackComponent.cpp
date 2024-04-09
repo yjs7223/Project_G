@@ -46,31 +46,37 @@ void UEnemyAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	MeleeSense();
+	if (!bHit)
+	{
+		timer -= DeltaTime;
+		if (timer <= 0)
+		{
+			switch (AtkType)
+			{
+			case E_AtkType::Melee:
+				MeleeSense();
+				break;
+			case E_AtkType::Range:
+				RangeAttack();
+				break;
+			}
+		}
+	}
 
-	// ...
 }
 
 void UEnemyAttackComponent::PlayAttack()
 {
-	switch (AtkType)
-	{
-	case E_AtkType::Melee:
-		bHit = false;
-		break;
-	case E_AtkType::Range:
-		RangeAttack();
-		break;
-	}
+	bHit = false;
+}
+
+void UEnemyAttackComponent::EndAttack()
+{
+	bHit = true;
 }
 
 void UEnemyAttackComponent::MeleeSense()
 {
-	if (bHit)
-	{
-		return;
-	}
-
 	FCollisionQueryParams traceParams;
 
 	FVector start = mesh->GetSocketLocation(d_attackStartPoint);
@@ -96,6 +102,8 @@ void UEnemyAttackComponent::RangeAttack()
 
 	FActorSpawnParameters spawnParam;
 	AActor* cpybullet = GetWorld()->SpawnActor<AActor>(d_bullet, start, rot, spawnParam);
+
+	bHit = true;
 }
 
 void UEnemyAttackComponent::SetDataTable(FName p_RowName)
@@ -111,6 +119,7 @@ void UEnemyAttackComponent::SetDataTable(FName p_RowName)
 			d_attackEndPoint = curAttackData->attackEndPoint;
 			d_bLoop = curAttackData->bLoop;
 			d_bullet = curAttackData->bullet;
+			d_delay = curAttackData->delay;
 		}
 	}
 }

@@ -73,8 +73,13 @@ public:
 		bool d_bLoop;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TSubclassOf<AActor> d_bullet;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float d_delay;
 
 	class USkeletalMeshComponent* mesh;
+
+	// ≈∏¿Ã∏”
+	float timer;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -85,6 +90,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PlayAttack();
+
+	UFUNCTION(BlueprintCallable)
+		void EndAttack();
 
 	UFUNCTION(BlueprintCallable)
 		void MeleeSense();

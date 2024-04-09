@@ -47,4 +47,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TSubclassOf<AActor> bullet;
 
+	// µÙ∑π¿Ã
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float delay;
 };
