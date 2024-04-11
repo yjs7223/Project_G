@@ -49,5 +49,8 @@ public:
 	FTimerHandle clearTh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int stack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UElementDataAsset* elementDataAsset;
 };

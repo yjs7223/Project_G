@@ -23,6 +23,9 @@ public:
 	// AI Stat
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyMoveSetting")
 		float moveSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyMoveSetting")
+		float curSpeed;	// 현재 속도
+	float slow;	// 속도 감소량
 
 
 	// 몽타주
@@ -33,7 +36,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
 		class AEnemySpawner* mySpawner;
 
-	class AEnemyController* ec;
+	class AEnemyController* controller;
+	class UElementComponent* ec;
+
+	float eTimer;
 
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UEnemyAttackComponent* enemyAttackComponent;*/
@@ -49,4 +55,5 @@ public:
 	void HpUpdate();
 	void MovementUpdate();
 	void DieCheck();
+	void ElementalEffect(float t);
 };

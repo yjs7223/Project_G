@@ -8,6 +8,7 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "EnemyAttackComponent.h"
+#include "ElementComponent.h"
 
 AEnemy::AEnemy() : moveSpeed(600)
 {
@@ -18,13 +19,16 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ec = Cast<AEnemyController>(GetController());
+	controller = Cast<AEnemyController>(GetController());
+	ec = FindComponentByClass<UElementComponent>();
+	slow = 0.1f;
 }
 
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	ElementalEffect(DeltaTime);
 	HpUpdate();
 	MovementUpdate();
 	//DieCheck();
@@ -32,15 +36,18 @@ void AEnemy::Tick(float DeltaTime)
 
 void AEnemy::HpUpdate()
 {
-	if (ec != nullptr)
+	if (controller != nullptr)
 	{
-		ec->BBC->SetValueAsFloat("HealthPoint", stat->hp);
+		controller->BBC->SetValueAsFloat("HealthPoint", stat->hp);
 	}
 }
 
 void AEnemy::MovementUpdate()
 {
-	GetCharacterMovement()->MaxWalkSpeed = moveSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = moveSpeed - moveSpeed * (ec->stack * slow);;
+
+	// Ç¥½Ã¿ë
+	curSpeed = GetCharacterMovement()->MaxWalkSpeed;
 }
 
 void AEnemy::DieCheck()
@@ -48,5 +55,37 @@ void AEnemy::DieCheck()
 	if (stat->hp <= 0)
 	{
 		Destroy();
+	}
+}
+
+void AEnemy::ElementalEffect(float t)
+{
+	if (ec != nullptr)
+	{
+		switch (ec->ElementState)
+		{
+		case EElementTypeEnum::ET_Normal:
+			eTimer = 0;
+			ec->stack = 0;
+			break;
+		case EElementTypeEnum::ET_Flame:
+			eTimer += t;
+			if (eTimer >= 0.5f)
+			{
+				stat->hp -= 3 * ec->stack;
+				eTimer = 0;
+			}
+			break;
+		case EElementTypeEnum::ET_Water:
+			break;
+		case EElementTypeEnum::ET_Air:
+			break;
+		case EElementTypeEnum::ET_Evaporation:
+			break;
+		case EElementTypeEnum::ET_Diffusion:
+			break;
+		case EElementTypeEnum::ET_Florescence:
+			break;
+		}
 	}
 }

@@ -50,6 +50,11 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 	case EElementTypeEnum::ET_Flame:
 		GetWorld()->GetTimerManager().ClearTimer(clearTh);
 
+		if (stack <= 5)
+		{
+			stack++;	// 스택 쌓기 추가
+		}
+		
 		if (p_ElementType == EElementTypeEnum::ET_Water)
 		{
 			ElementState = EElementTypeEnum::ET_Evaporation;
@@ -64,6 +69,11 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 	case EElementTypeEnum::ET_Water:
 		GetWorld()->GetTimerManager().ClearTimer(clearTh);
 
+		if (stack <= 5)
+		{
+			stack++;	// 스택 쌓기 추가
+		}
+
 		if (p_ElementType == EElementTypeEnum::ET_Flame)
 		{
 			ElementState = EElementTypeEnum::ET_Evaporation;
@@ -77,6 +87,11 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 		break;
 	case EElementTypeEnum::ET_Air:
 		GetWorld()->GetTimerManager().ClearTimer(clearTh);
+
+		if (stack <= 3)
+		{
+			stack++;	// 스택 쌓기 추가
+		}
 
 		if (p_ElementType == EElementTypeEnum::ET_Water)
 		{
