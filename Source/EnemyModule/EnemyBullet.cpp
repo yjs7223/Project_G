@@ -4,6 +4,8 @@
 #include "EnemyBullet.h"
 #include "BaseStatComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "ElementComponent.h"
+#include "EnemyAttackComponent.h"
 
 // Sets default values
 AEnemyBullet::AEnemyBullet()
@@ -22,25 +24,45 @@ void AEnemyBullet::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	bulletMesh->OnComponentHit.AddDynamic(this, &AEnemyBullet::OnHit);
+	bulletMesh->OnComponentBeginOverlap.AddDynamic(this, &AEnemyBullet::OnOverlapBegin);
 }
 
 // Called every frame
 void AEnemyBullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
-void AEnemyBullet::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AEnemyBullet::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (UBaseStatComponent* sc = OtherActor->FindComponentByClass<UBaseStatComponent>())
+	if (targetActor == OtherActor)
 	{
-		sc->Attacked(bulletDamage);
+		if (bBound)
+		{
+			if (!OtherActor->ActorHasTag("Enemy"))
+			{
+				return;
+			}
+		}
+
+		if (UElementComponent* ec = OtherActor->FindComponentByClass<UElementComponent>())
+		{
+			ec->ChangeElementState2(bulletType);
+		}
+
+		if (UBaseStatComponent* sc = OtherActor->FindComponentByClass<UBaseStatComponent>())
+		{
+			sc->Attacked(bulletDamage);
+		}
+
+		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, OtherActor->GetName());
+
+		if (UEnemyAttackComponent* eac = OtherActor->FindComponentByClass<UEnemyAttackComponent>())
+		{
+			eac->BoundAttack2(boundCount, maxBoundCount);
+		}
+
+		Destroy();
 	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, OtherActor->GetName());
-
-	Destroy();
 }
 

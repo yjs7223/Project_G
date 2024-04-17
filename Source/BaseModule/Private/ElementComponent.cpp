@@ -43,6 +43,15 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 	{
 	case EElementTypeEnum::ET_Normal:
 		GetWorld()->GetTimerManager().ClearTimer(clearTh);
+
+		if (p_ElementType != EElementTypeEnum::ET_Normal)
+		{
+			stack++;
+		}
+		if (p_ElementType == EElementTypeEnum::ET_Air)
+		{
+			bBound = true;
+		}
 		ElementState = p_ElementType;
 		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, text);
 		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 8.f, false);
@@ -50,7 +59,7 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 	case EElementTypeEnum::ET_Flame:
 		GetWorld()->GetTimerManager().ClearTimer(clearTh);
 
-		if (stack <= 5)
+		if (stack < 5)
 		{
 			stack++;	// 스택 쌓기 추가
 		}
@@ -69,7 +78,7 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 	case EElementTypeEnum::ET_Water:
 		GetWorld()->GetTimerManager().ClearTimer(clearTh);
 
-		if (stack <= 5)
+		if (stack < 5)
 		{
 			stack++;	// 스택 쌓기 추가
 		}
@@ -88,7 +97,7 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 	case EElementTypeEnum::ET_Air:
 		GetWorld()->GetTimerManager().ClearTimer(clearTh);
 
-		if (stack <= 3)
+		if (stack < 3)
 		{
 			stack++;	// 스택 쌓기 추가
 		}
@@ -101,6 +110,101 @@ void UElementComponent::ChangeElementState(EElementTypeEnum p_ElementType)
 		{
 			ElementState = EElementTypeEnum::ET_Diffusion;
 		}
+		else if (p_ElementType == EElementTypeEnum::ET_Air)
+		{
+			bBound = true;
+		}
+		PlayEffect(ElementState);
+		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 4.f, false);
+		break;
+	case EElementTypeEnum::ET_Evaporation:
+		//GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 5.f, false);
+		break;
+	case EElementTypeEnum::ET_Diffusion:
+		//GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 5.f, false);
+		break;
+	case EElementTypeEnum::ET_Florescence:
+		//GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 5.f, false);
+		break;
+	default:
+		break;
+	}
+
+}
+
+void UElementComponent::ChangeElementState2(EElementTypeEnum p_ElementType)
+{
+	//GetWorld()->GetTimerManager().ClearTimer(clearTh);
+
+	switch (ElementState)
+	{
+	case EElementTypeEnum::ET_Normal:
+		GetWorld()->GetTimerManager().ClearTimer(clearTh);
+
+		if (p_ElementType != EElementTypeEnum::ET_Normal)
+		{
+			stack++;
+		}
+
+		ElementState = p_ElementType;
+		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, text);
+		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 8.f, false);
+		break;
+	case EElementTypeEnum::ET_Flame:
+		GetWorld()->GetTimerManager().ClearTimer(clearTh);
+
+		if (stack < 5)
+		{
+			stack++;	// 스택 쌓기 추가
+		}
+
+		if (p_ElementType == EElementTypeEnum::ET_Water)
+		{
+			ElementState = EElementTypeEnum::ET_Evaporation;
+		}
+		else if (p_ElementType == EElementTypeEnum::ET_Air)
+		{
+			ElementState = EElementTypeEnum::ET_Diffusion;
+		}
+		PlayEffect(ElementState);
+		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 4.f, false);
+		break;
+	case EElementTypeEnum::ET_Water:
+		GetWorld()->GetTimerManager().ClearTimer(clearTh);
+
+		if (stack < 5)
+		{
+			stack++;	// 스택 쌓기 추가
+		}
+
+		if (p_ElementType == EElementTypeEnum::ET_Flame)
+		{
+			ElementState = EElementTypeEnum::ET_Evaporation;
+		}
+		else if (p_ElementType == EElementTypeEnum::ET_Air)
+		{
+			ElementState = EElementTypeEnum::ET_Florescence;
+		}
+		PlayEffect(ElementState);
+		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 4.f, false);
+		break;
+	case EElementTypeEnum::ET_Air:
+		GetWorld()->GetTimerManager().ClearTimer(clearTh);
+
+		if (stack < 3)
+		{
+			stack++;	// 스택 쌓기 추가
+		}
+
+		if (p_ElementType == EElementTypeEnum::ET_Water)
+		{
+			ElementState = EElementTypeEnum::ET_Florescence;
+		}
+		else if (p_ElementType == EElementTypeEnum::ET_Flame)
+		{
+			ElementState = EElementTypeEnum::ET_Diffusion;
+		}
+
 		PlayEffect(ElementState);
 		GetWorld()->GetTimerManager().SetTimer(clearTh, this, &UElementComponent::ClearElementState, 4.f, false);
 		break;

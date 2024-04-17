@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "ElementComponent.h"
 #include "EnemyBullet.generated.h"
 
 UCLASS()
@@ -20,7 +21,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 public:	
 	// Called every frame
@@ -36,4 +37,13 @@ public:
 	//데미지변수
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float bulletDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		EElementTypeEnum bulletType;
+
+	bool bBound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AActor* targetActor;
+	int boundCount;
+	int maxBoundCount;
 };

@@ -9,8 +9,8 @@ void AEnemyController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	BBC = Blackboard;
-	UseBlackboard(BBD, BBC);
+	bbc = Blackboard;
+	UseBlackboard(bbd, bbc);
 
 }
 

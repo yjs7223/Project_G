@@ -9,6 +9,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "EnemyAttackComponent.h"
 #include "ElementComponent.h"
+#include "ActiveZone.h"
 
 AEnemy::AEnemy() : moveSpeed(600)
 {
@@ -21,6 +22,7 @@ void AEnemy::BeginPlay()
 
 	controller = Cast<AEnemyController>(GetController());
 	ec = FindComponentByClass<UElementComponent>();
+	eac = FindComponentByClass<UEnemyAttackComponent>();
 	slow = 0.1f;
 }
 
@@ -38,7 +40,7 @@ void AEnemy::HpUpdate()
 {
 	if (controller != nullptr)
 	{
-		controller->BBC->SetValueAsFloat("HealthPoint", stat->hp);
+		controller->bbc->SetValueAsFloat("HealthPoint", stat->hp);
 	}
 }
 
@@ -77,8 +79,15 @@ void AEnemy::ElementalEffect(float t)
 			}
 			break;
 		case EElementTypeEnum::ET_Water:
+			// 공백
 			break;
 		case EElementTypeEnum::ET_Air:
+			if (ec->bBound)
+			{
+				eac->BoundAttack();
+				ec->bBound = false;
+			}
+			// 공백
 			break;
 		case EElementTypeEnum::ET_Evaporation:
 			break;
@@ -89,3 +98,4 @@ void AEnemy::ElementalEffect(float t)
 		}
 	}
 }
+

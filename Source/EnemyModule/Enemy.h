@@ -38,8 +38,12 @@ public:
 
 	class AEnemyController* controller;
 	class UElementComponent* ec;
+	class UEnemyAttackComponent* eac;
 
 	float eTimer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
+	class AActiveZone* az;
 
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UEnemyAttackComponent* enemyAttackComponent;*/

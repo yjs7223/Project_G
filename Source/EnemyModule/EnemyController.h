@@ -19,14 +19,14 @@ public:
 		bool inSight;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
-		class UBlackboardData* BBD;
+		class UBlackboardData* bbd;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
-		class UBlackboardComponent* BBC;
+		class UBlackboardComponent* bbc;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
-		class UBehaviorTree* BT;
+		class UBehaviorTree* bt;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AIController)
-		class UBehaviorTreeComponent* BT_Component;
+		class UBehaviorTreeComponent* bt_Component;
 
 protected:
 	virtual void BeginPlay() override;

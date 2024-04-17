@@ -77,9 +77,13 @@ public:
 		float d_delay;
 
 	class USkeletalMeshComponent* mesh;
+	class UElementComponent* ec;
 
 	// 타이머
 	float timer;
+
+	// 통통탄 튕기는 최대 거리
+	float maxDis;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -99,6 +103,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void RangeAttack();
+
+	UFUNCTION(BlueprintCallable)
+		void BoundAttack();
+	UFUNCTION(BlueprintCallable)
+		void BoundAttack2(int p_boundCount, int p_maxBoundCount);
 
 	UFUNCTION(BlueprintCallable)
 		void SetDataTable(FName p_RowName);

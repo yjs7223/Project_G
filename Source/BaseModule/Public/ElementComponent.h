@@ -37,6 +37,8 @@ public:
 
 	void ChangeElementState(EElementTypeEnum p_ElementType);
 
+	void ChangeElementState2(EElementTypeEnum p_ElementType);
+
 	void ClearElementState();
 
 	void PlayEffect(EElementTypeEnum p_State);
@@ -50,6 +52,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int stack;
+
+	bool bBound;	// 바운드를 한번 하기 위함
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UElementDataAsset* elementDataAsset;
