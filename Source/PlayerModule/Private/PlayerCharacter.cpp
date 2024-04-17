@@ -14,8 +14,8 @@ APlayerCharacter::APlayerCharacter()
 	camera->SetupAttachment(RootComponent);
 	camera->bUsePawnControlRotation = true;
 
-	weaponActor = CreateDefaultSubobject<UChildActorComponent>(TEXT("WeaponActor"));
-	weaponActor->SetupAttachment(RootComponent);
+	//weaponActor = CreateDefaultSubobject<UChildActorComponent>(TEXT("WeaponActor"));
+	//weaponActor->SetupAttachment(RootComponent);
 	//weaponActor->CreateChildActor()
 
 	inputVector = FVector::ZeroVector;
@@ -139,7 +139,7 @@ void APlayerCharacter::SetWeaponRotation()
 	wr.Yaw = r.Yaw - 90.f;
 	wr.Roll = -r.Pitch;
 
-	weaponActor->SetWorldRotation(wr);
+	//weaponActor->SetWorldRotation(wr);
 	//weaponActor->SetRelativeRotation(wr);
 }
 

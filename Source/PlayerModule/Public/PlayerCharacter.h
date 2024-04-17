@@ -75,8 +75,8 @@ protected:
 	class UCameraComponent* camera;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UChildActorComponent* weaponActor;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//UChildActorComponent* weaponActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector inputVector;
