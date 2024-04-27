@@ -14,8 +14,8 @@ APlayerCharacter::APlayerCharacter()
 	camera->SetupAttachment(RootComponent);
 	camera->bUsePawnControlRotation = true;
 
-	weaponActor = CreateDefaultSubobject<UChildActorComponent>(TEXT("WeaponActor"));
-	weaponActor->SetupAttachment(RootComponent);
+	//weaponActor = CreateDefaultSubobject<UChildActorComponent>(TEXT("WeaponActor"));
+	//weaponActor->SetupAttachment(RootComponent);
 	//weaponActor->CreateChildActor()
 
 	inputVector = FVector::ZeroVector;
@@ -56,8 +56,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &APlayerCharacter::StartJump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &APlayerCharacter::StopJump);
+	//PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &APlayerCharacter::StartJump);
+	//PlayerInputComponent->BindAction("Jump", IE_Released, this, &APlayerCharacter::StopJump);
 
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APlayerCharacter::StartFire);
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &APlayerCharacter::StopFire);
@@ -68,11 +68,11 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAction("SwapElement", IE_Pressed, this, &APlayerCharacter::StartSwapElement);
 	PlayerInputComponent->BindAction("SwapElement", IE_Released, this, &APlayerCharacter::StopSwapElement);
 
-	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCharacter::MoveRight);
+	//PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCharacter::MoveForward);
+	//PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCharacter::MoveRight);
 
-	PlayerInputComponent->BindAxis("Turn", this, &APlayerCharacter::Turn);
-	PlayerInputComponent->BindAxis("LookUp", this, &APlayerCharacter::LookUp);
+	//PlayerInputComponent->BindAxis("Turn", this, &APlayerCharacter::Turn);
+	//PlayerInputComponent->BindAxis("LookUp", this, &APlayerCharacter::LookUp);
 }
 
 void APlayerCharacter::Moving()
@@ -139,7 +139,7 @@ void APlayerCharacter::SetWeaponRotation()
 	wr.Yaw = r.Yaw - 90.f;
 	wr.Roll = -r.Pitch;
 
-	weaponActor->SetWorldRotation(wr);
+	//weaponActor->SetWorldRotation(wr);
 	//weaponActor->SetRelativeRotation(wr);
 }
 
