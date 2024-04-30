@@ -43,7 +43,14 @@ public:
 	float eTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
-	class AActiveZone* az;
+		class AActiveZone* az;
+
+	// 다음 콤보 실행 여부
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool bCombo;
+	// 다음 콤보 실행 딜레이
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float comboDelay;
 
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UEnemyAttackComponent* enemyAttackComponent;*/

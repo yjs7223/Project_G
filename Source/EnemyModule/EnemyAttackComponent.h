@@ -64,7 +64,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		E_AtkType d_attackType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UAnimMontage* d_attackMontage;
+		TArray<UAnimMontage*> d_attackMontage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool d_rightHand;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

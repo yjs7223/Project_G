@@ -277,13 +277,14 @@ void UEnemyAttackComponent::SetDataTable(FName p_RowName)
 		curAttackData = attackDT->FindRow<FST_SkillData>(p_RowName, TEXT(""));
 		if (curAttackData != nullptr)
 		{
-			/*for (int i = 0; i < curAttackData->attackMontage.Num(); i++)
+			d_attackMontage.Empty();
+			for (int i = 0; i < curAttackData->attackMontage.Num(); i++)
 			{
 				d_attackMontage.Add(curAttackData->attackMontage[i]);
-			}*/
+			}
 
 			d_attackType = curAttackData->attackType;
-			d_attackMontage = curAttackData->attackMontage;
+			//d_attackMontage = curAttackData->attackMontage;
 			d_rightHand = curAttackData->rightHand;
 			d_leftHand = curAttackData->leftHand;
 			d_bLoop = curAttackData->bLoop;
