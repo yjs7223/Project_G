@@ -4,18 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "ElementDataTable.h"
 #include "ElementComponent.generated.h"
 
 UENUM(BlueprintType)
 enum class EElementTypeEnum : uint8
 {
 	ET_Normal = 0 UMETA(DisplayName = "Normal"),
-	ET_Flame = 1 UMETA(DisplayName = "Flame"),
-	ET_Water = 2 UMETA(DisplayName = "Water"),
-	ET_Air = 4 UMETA(DisplayName = "Air"),
-	ET_Evaporation = ET_Flame + ET_Water UMETA(DisplayName = "Evaporation"),
-	ET_Diffusion = ET_Flame + ET_Air UMETA(DisplayName = "Diffusion"),
-	ET_Florescence = ET_Water + ET_Air UMETA(DisplayName = "Florescence"),
+	ET_Venom = 1 UMETA(DisplayName = "Venom"),
+	ET_Freeze = 2 UMETA(DisplayName = "Freeze"),
+	ET_TongTong = 4 UMETA(DisplayName = "TongTong"),
+	ET_Evaporation = ET_Venom + ET_Freeze UMETA(DisplayName = "Evaporation"),
+	ET_Diffusion = ET_Venom + ET_TongTong UMETA(DisplayName = "Diffusion"),
+	ET_Florescence = ET_Freeze + ET_TongTong UMETA(DisplayName = "Florescence"),
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -35,9 +36,19 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void ChangeElementState(EElementTypeEnum p_ElementType);
+	void ChangeElementState(EElementTypeEnum p_ElementType, float p_Damage);
 
 	void ClearElementState();
+
+	void VenomAction(float p_Damage);
+
+	void VenomTickDmg(float p_Damage);
+
+	void FreezeAction();
+
+	void TongTongAction(float p_Damage, int p_TongStack, FCollisionQueryParams p_Param);
+
+	void TongTongStart(float p_Damage);
 
 	void PlayEffect(EElementTypeEnum p_State);
 
@@ -46,8 +57,23 @@ public:
 	EElementTypeEnum ElementState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int elementStack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float timeDuration;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FTimerHandle clearTh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FTimerHandle VenomTickTh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UElementDataAsset* elementDataAsset;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UDataTable* elementDataTable;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FElementDataStruct elementData;
 };

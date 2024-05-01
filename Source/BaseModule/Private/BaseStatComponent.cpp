@@ -47,7 +47,7 @@ void UBaseStatComponent::Attacked(float p_Damage)
 		bDie = true;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::SanitizeFloat(hp));
+	//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::SanitizeFloat(hp));
 }
 
 void UBaseStatComponent::Recovery(float p_Recover)

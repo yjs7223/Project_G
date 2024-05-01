@@ -44,7 +44,7 @@ void ABullet::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrim
 
 	if (UElementComponent* ec = OtherActor->FindComponentByClass<UElementComponent>())
 	{
-		ec->ChangeElementState(bulletType);
+		ec->ChangeElementState(bulletType, bulletDamage);
 	}
 
 	if (UBaseStatComponent* sc = OtherActor->FindComponentByClass<UBaseStatComponent>())

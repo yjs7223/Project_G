@@ -36,9 +36,13 @@ void AWeapon::BeginPlay()
 		pc->OnChangeWeaponTypeDelegate.BindUObject(this, &AWeapon::ChangeWeapon);
 		pc->OnChangeElementTypeDelegate.BindUObject(this, &AWeapon::ChangeElement);
 	}
-	FPlayerWeaponStruct* weaponData;
-	weaponData = PlayerWeaponDataTable->FindRow<FPlayerWeaponStruct>(FName("RF"), FString(""));
-	damage = weaponData->damage;
+
+	if (PlayerWeaponDataTable)
+	{
+		FPlayerWeaponStruct* weaponData;
+		weaponData = PlayerWeaponDataTable->FindRow<FPlayerWeaponStruct>(FName("RF"), FString(""));
+		damage = weaponData->damage;
+	}
 }
 
 // Called every frame
@@ -202,15 +206,15 @@ void AWeapon::SwapElement()
 	switch (ammoElementType)
 	{
 	case EElementTypeEnum::ET_Normal:
-		ammoElementType = EElementTypeEnum::ET_Flame;
+		ammoElementType = EElementTypeEnum::ET_Venom;
 		break;
-	case EElementTypeEnum::ET_Flame:
-		ammoElementType = EElementTypeEnum::ET_Water;
+	case EElementTypeEnum::ET_Venom:
+		ammoElementType = EElementTypeEnum::ET_Freeze;
 		break;
-	case EElementTypeEnum::ET_Water:
-		ammoElementType = EElementTypeEnum::ET_Air;
+	case EElementTypeEnum::ET_Freeze:
+		ammoElementType = EElementTypeEnum::ET_TongTong;
 		break;
-	case EElementTypeEnum::ET_Air:
+	case EElementTypeEnum::ET_TongTong:
 		ammoElementType = EElementTypeEnum::ET_Normal;
 		break;
 	default:
@@ -225,14 +229,14 @@ void AWeapon::ChangeElement(EElementTypeEnum p_ElementType)
 	case EElementTypeEnum::ET_Normal:
 		ammoElementType = EElementTypeEnum::ET_Normal;
 		break;
-	case EElementTypeEnum::ET_Flame:
-		ammoElementType = EElementTypeEnum::ET_Flame;
+	case EElementTypeEnum::ET_Venom:
+		ammoElementType = EElementTypeEnum::ET_Venom;
 		break;
-	case EElementTypeEnum::ET_Water:
-		ammoElementType = EElementTypeEnum::ET_Water;
+	case EElementTypeEnum::ET_Freeze:
+		ammoElementType = EElementTypeEnum::ET_Freeze;
 		break;
-	case EElementTypeEnum::ET_Air:
-		ammoElementType = EElementTypeEnum::ET_Air;
+	case EElementTypeEnum::ET_TongTong:
+		ammoElementType = EElementTypeEnum::ET_TongTong;
 		break;
 	default:
 		break;
