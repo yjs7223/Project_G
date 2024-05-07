@@ -16,11 +16,20 @@ class ENEMYMODULE_API UEnemyDataAsset : public UPrimaryDataAsset
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		USkeletalMesh* mesh;
+		USkeletalMesh* swordMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UAnimBlueprint* anim;
+		UAnimBlueprint* swordAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		USkeletalMesh* weaponMesh;
+		USkeletalMesh* swordWeaponMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USkeletalMesh* rifleMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UAnimBlueprint* rifleAnim;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USkeletalMesh* rifleWeaponMesh;
 };

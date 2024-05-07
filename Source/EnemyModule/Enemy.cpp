@@ -10,10 +10,13 @@
 #include "EnemyAttackComponent.h"
 #include "ElementComponent.h"
 #include "ActiveZone.h"
+#include "EnemyDataAsset.h"
 
 AEnemy::AEnemy() : moveSpeed(600)
 {
 	//enemyAttackComponent = CreateDefaultSubobject<UEnemyAttackComponent>(TEXT("EnemyAttackComponent"));
+
+	weaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
 }
 
 void AEnemy::BeginPlay()
@@ -24,6 +27,13 @@ void AEnemy::BeginPlay()
 	ec = FindComponentByClass<UElementComponent>();
 	eac = FindComponentByClass<UEnemyAttackComponent>();
 	slow = 0.1f;
+
+	if (weaponMesh != nullptr)
+	{
+		weaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "weapon_r");
+	}
+
+	SetDataTable();
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -97,5 +107,40 @@ void AEnemy::ElementalEffect(float t)
 			break;
 		}
 	}
+}
+
+void AEnemy::SetDataTable()
+{
+	if (defaultDT != nullptr)
+	{
+		curDefaultDT = defaultDT->FindRow<FEnemyDataStruct>(*FString::FromInt((int)enemyType), TEXT(""));
+		if (curDefaultDT != nullptr)
+		{
+			moveSpeed = curDefaultDT->moveSpeed;
+			eac->attackDamage = curDefaultDT->attackDamage;
+			stat->hp = curDefaultDT->hp;
+
+			for (int i = 0; i < weaponArr.Num(); i++)
+			{
+				weaponArr.Add(curDefaultDT->weaponArr[i]);
+			}
+		}
+	}
+
+	SetWeaponMesh();
+}
+
+void AEnemy::SetWeaponMesh()
+{
+	switch (enemyType)
+	{
+	case E_WeaponType::Sword:
+		weaponMesh->SetSkeletalMesh(enemyDA->swordWeaponMesh);
+		break;
+	case E_WeaponType::Rifle:
+		weaponMesh->SetSkeletalMesh(enemyDA->rifleWeaponMesh);
+		break;
+	}
+	
 }
 

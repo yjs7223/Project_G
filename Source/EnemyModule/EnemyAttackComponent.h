@@ -84,6 +84,8 @@ public:
 
 	// 통통탄 튕기는 최대 거리
 	float maxDis;
+
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

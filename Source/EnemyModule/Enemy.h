@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseCharacter.h"
+#include "EnemyDataTable.h"
 #include "Enemy.generated.h"
 
 /**
@@ -17,6 +18,18 @@ public:
 	AEnemy();
 
 	// DefaultSetting
+
+	// 기본 데이터 테이블
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
+		UDataTable* defaultDT;
+	// 현재 데이터 테이블
+	struct FEnemyDataStruct* curDefaultDT;
+
+	// Enemy 타입
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
+		E_WeaponType enemyType;
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
 		class AActor* target;
 
@@ -26,11 +39,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyMoveSetting")
 		float curSpeed;	// 현재 속도
 	float slow;	// 속도 감소량
-
-
-	// 몽타주
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class UAnimMontage* jump_Montage;
 
 	// 스포너
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
@@ -45,15 +53,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
 		class AActiveZone* az;
 
-	// 다음 콤보 실행 여부
+	// 주무기 타입
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemyDefaultSetting")
+		TArray<E_WeaponType> weaponArr;
+
+	// 데이터 에셋
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bCombo;
-	// 다음 콤보 실행 딜레이
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float comboDelay;
+		class UEnemyDataAsset* enemyDA;
 
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UEnemyAttackComponent* enemyAttackComponent;*/
+
+	class USkeletalMeshComponent* weaponMesh;
 
 protected:
 	// Called when the game starts or when spawned
@@ -67,4 +78,7 @@ public:
 	void MovementUpdate();
 	void DieCheck();
 	void ElementalEffect(float t);
+
+	void SetDataTable();
+	void SetWeaponMesh();
 };

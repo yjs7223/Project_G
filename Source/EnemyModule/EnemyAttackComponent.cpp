@@ -17,6 +17,7 @@
 #include "EnemyBullet.h"
 #include "CollisionQueryParams.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "EnemyDataAsset.h"
 
 // Sets default values for this component's properties
 UEnemyAttackComponent::UEnemyAttackComponent() : maxDis(600)
@@ -45,7 +46,6 @@ void UEnemyAttackComponent::BeginPlay()
 	}
 	mesh = GetOwner()->FindComponentByClass<USkeletalMeshComponent>();
 	ec = GetOwner()->FindComponentByClass<UElementComponent>();
-
 }
 
 
@@ -147,20 +147,23 @@ void UEnemyAttackComponent::BoundAttack()
 
 	while (i <= 5)
 	{
-		for (auto& enemy : owner->az->enemyArray)
+		if (owner->az != nullptr)
 		{
-			if (GetWorld()->LineTraceSingleByChannel(m_result, start, enemy->GetActorLocation(), ECC_Visibility, traceParams))
+			for (auto& enemy : owner->az->enemyArray)
 			{
-				if (m_result.GetActor() == enemy)
+				if (GetWorld()->LineTraceSingleByChannel(m_result, start, enemy->GetActorLocation(), ECC_Visibility, traceParams))
 				{
-					if (Cast<AEnemy>(enemy)->GetDistanceTo(owner) <= maxDis)
+					if (m_result.GetActor() == enemy)
 					{
-						if (Cast<AEnemy>(enemy)->ec->stack == i)
+						if (Cast<AEnemy>(enemy)->GetDistanceTo(owner) <= maxDis)
 						{
-							if (Cast<AEnemy>(enemy)->GetDistanceTo(owner) <= dis)
+							if (Cast<AEnemy>(enemy)->ec->stack == i)
 							{
-								dis = Cast<AEnemy>(enemy)->GetDistanceTo(owner);
-								e = Cast<AEnemy>(enemy);
+								if (Cast<AEnemy>(enemy)->GetDistanceTo(owner) <= dis)
+								{
+									dis = Cast<AEnemy>(enemy)->GetDistanceTo(owner);
+									e = Cast<AEnemy>(enemy);
+								}
 							}
 						}
 					}
