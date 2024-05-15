@@ -48,23 +48,7 @@
 			]
 		},
 		{
-			"Name": "MotionWarping",
-			"Enabled": true
-		},
-		{
-			"Name": "SkeletalMeshModelingTools",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimationLocomotionLibrary",
-			"Enabled": true
-		},
-		{
-			"Name": "GameplayInsights",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimationWarping",
+			"Name": "GPULightmass",
 			"Enabled": true
 		}
 	]
