@@ -80,5 +80,7 @@ public:
 	void ElementalEffect(float t);
 
 	void SetDataTable();
-	void SetWeaponMesh();
+	
+	UFUNCTION(BlueprintCallable, Category = "WeaponMesh")
+		void SetWeaponMesh(E_WeaponType p_type);
 };

@@ -113,6 +113,7 @@ void AEnemy::SetDataTable()
 {
 	if (defaultDT != nullptr)
 	{
+		weaponArr.Empty();
 		curDefaultDT = defaultDT->FindRow<FEnemyDataStruct>(*FString::FromInt((int)enemyType), TEXT(""));
 		if (curDefaultDT != nullptr)
 		{
@@ -120,19 +121,22 @@ void AEnemy::SetDataTable()
 			eac->attackDamage = curDefaultDT->attackDamage;
 			stat->hp = curDefaultDT->hp;
 
-			for (int i = 0; i < weaponArr.Num(); i++)
+			for (int i = 0; i < curDefaultDT->weaponArr.Num(); i++)
 			{
 				weaponArr.Add(curDefaultDT->weaponArr[i]);
 			}
 		}
 	}
 
-	SetWeaponMesh();
+	if (weaponArr.Num() > 0)
+	{
+		SetWeaponMesh(weaponArr[0]);
+	}
 }
 
-void AEnemy::SetWeaponMesh()
+void AEnemy::SetWeaponMesh(E_WeaponType p_type)
 {
-	switch (enemyType)
+	switch (p_type)
 	{
 	case E_WeaponType::Sword:
 		weaponMesh->SetSkeletalMesh(enemyDA->swordWeaponMesh);
